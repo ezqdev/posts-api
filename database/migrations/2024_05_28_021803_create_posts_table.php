@@ -16,12 +16,12 @@ return new class extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->text('description');
-            $table->longText('content');
-            $table->string('cover_image_url')->default('');
-            $table->enum('type', ['Blog', 'News', 'Event', 'Update']);
-            $table->date('active_from');
-            $table->date('active_to');
+            $table->text('description')->nullable();
+            $table->longText('content')->nullable();
+            $table->string('image_url')->default('');
+            $table->enum('type', ['Real estate events', 'Classroom courses', 'Webinars', 'Legal updates', 'News Mundoinmobilario.tv', 'Promotions', 'Publicity']);
+            $table->timestamp('active_from')->nullable();
+            $table->timestamp('active_to')->nullable();
             $table->timestamps();
         });
     }
