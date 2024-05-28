@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePostRequest;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -12,21 +13,10 @@ class PostController
         return Post::all();
     }
 
-    public function store(Request $request)
+    public function store(StorePostRequest $request) // Usa StorePostRequest en lugar de Request
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'content' => 'required|string|max:4294967295', // Uso de max:4294967295 para simular LONGTEXT
-            'image_url' => 'nullable|string', // Cambiado a image_url como lo solicitaste
-            'type' => 'required|in:Blog,News,Event,Update',
-            'active_from' => 'required|date',
-            'active_to' => 'required|date',
-        ]);
-
-        return Post::create($request->all());
+        return Post::create($request->validated());
     }
-
 
     public function show($id)
     {
@@ -40,11 +30,11 @@ class PostController
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'content' => 'required|longText',
-            'cover_image_url' => 'string',
+            'content' => 'required|string|max:4294967295',
+            'image_url' => 'nullable|string',
             'type' => 'required|in:Blog,News,Event,Update',
             'active_from' => 'required|date',
-            'active_to' => 'required|date'
+            'active_to' => 'required|date',
         ]);
 
         $post->update($request->all());
