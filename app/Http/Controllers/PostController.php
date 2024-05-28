@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
-class PostController extends Controller
+class PostController
 {
     public function index()
     {
@@ -17,15 +17,16 @@ class PostController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'content' => 'required|longText',
-            'cover_image_url' => 'string',
+            'content' => 'required|string|max:4294967295', // Uso de max:4294967295 para simular LONGTEXT
+            'image_url' => 'nullable|string', // Cambiado a image_url como lo solicitaste
             'type' => 'required|in:Blog,News,Event,Update',
             'active_from' => 'required|date',
-            'active_to' => 'required|date'
+            'active_to' => 'required|date',
         ]);
 
         return Post::create($request->all());
     }
+
 
     public function show($id)
     {
