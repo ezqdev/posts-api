@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -13,39 +14,46 @@ class PostController
         return Post::all();
     }
 
-    public function store(StorePostRequest $request) // Usa StorePostRequest en lugar de Request
+    public function store(StorePostRequest $request)
     {
-        return Post::create($request->validated());
+        $post = Post::create($request->validated());
+
+        return response()->json([
+            'message' => '¡El post se ha creado con éxito!',
+            'post' => $post
+        ]);
     }
 
     public function show($id)
     {
-        return Post::findOrFail($id);
-    }
+        $post = Post::find($id);
 
-    public function update(Request $request, $id)
-    {
-        $post = Post::findOrFail($id);
-
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'content' => 'required|string|max:4294967295',
-            'image_url' => 'nullable|string',
-            'type' => 'required|in:Blog,News,Event,Update',
-            'active_from' => 'required|date',
-            'active_to' => 'required|date',
-        ]);
-
-        $post->update($request->all());
+        if (!$post) {
+            return response()->json(['error' => 'El post no existe'], 404);
+        }
 
         return $post;
     }
 
+    public function update(UpdatePostRequest $request, $id)
+    {
+        $post = Post::findOrFail($id);
+
+        $post->update($request->validated());
+
+        return response()->json([
+            'message' => '¡El post se ha actualizado con éxito!',
+            'post' => $post
+        ]);
+    }
+
+
     public function destroy($id)
     {
-        Post::destroy($id);
+        $post = Post::destroy($id);
 
-        return response()->noContent();
+        return response()->json([
+            'message' => '¡El post se ha eliminado con éxito!',
+        ]);
     }
 }
