@@ -1,0 +1,594 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API de Posts",
+        "description": "API para gestionar posts",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Iniciar sesión",
+                "description": "Autenticar al usuario y devolver un token de acceso.",
+                "operationId": "loginUser",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "eduardo@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Autenticación exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "access_token": {
+                                            "type": "string",
+                                            "example": "1|qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfgh"
+                                        },
+                                        "token_type": {
+                                            "type": "string",
+                                            "example": "Bearer"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Credenciales incorrectas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Credenciales incorrectas"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/posts": {
+            "get": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Obtener lista de posts",
+                "operationId": "e9eaf7df702a94f4443677bd1a36cfe6",
+                "responses": {
+                    "200": {
+                        "description": "Lista de posts obtenida con éxito",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "title": {
+                                                "type": "string",
+                                                "example": "Título del post"
+                                            },
+                                            "content": {
+                                                "type": "string",
+                                                "example": "Contenido del post"
+                                            },
+                                            "image_url": {
+                                                "type": "string",
+                                                "example": "https://ejemplo.com/imagen.jpg"
+                                            },
+                                            "active_from": {
+                                                "type": "string",
+                                                "format": "date-time"
+                                            },
+                                            "active_to": {
+                                                "type": "string",
+                                                "format": "date-time"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Crear un nuevo post",
+                "operationId": "4a657e51a0066c64781851f2fd2651e2",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "content",
+                                    "type"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Mi primer post"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Mi primer descripcion para este post"
+                                    },
+                                    "content": {
+                                        "type": "string",
+                                        "example": "Contenido del post"
+                                    },
+                                    "type": {
+                                        "type": "string",
+                                        "enum": [
+                                            "Real estate events",
+                                            "Classroom courses",
+                                            "Webinars",
+                                            "Legal updates",
+                                            "News Mundoinmobilario.tv",
+                                            "Promotions",
+                                            "Publicity"
+                                        ],
+                                        "example": "Real estate events"
+                                    },
+                                    "image_url": {
+                                        "type": "string",
+                                        "example": "https://ejemplo.com/imagen.jpg"
+                                    },
+                                    "active_from": {
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "example": "2024-10-21 10:00:00"
+                                    },
+                                    "active_to": {
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "example": "2024-10-21 10:00:00"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Post creado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "¡El post se ha creado con éxito!"
+                                        },
+                                        "post": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "title": {
+                                                    "type": "string",
+                                                    "example": "Mi primer post"
+                                                },
+                                                "desciption": {
+                                                    "type": "string",
+                                                    "example": "Mi descripcion para este texto"
+                                                },
+                                                "content": {
+                                                    "type": "string",
+                                                    "example": "Contenido del post"
+                                                },
+                                                "type": {
+                                                    "type": "string",
+                                                    "example": "Real estate events"
+                                                },
+                                                "image_url": {
+                                                    "type": "string",
+                                                    "example": "https://ejemplo.com/imagen.jpg"
+                                                },
+                                                "active_from": {
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                },
+                                                "active_to": {
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            }
+        },
+        "/api/posts/{id}": {
+            "get": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Obtener un post específico",
+                "operationId": "b0f9d92879218f68a376b6edc6467c67",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del post",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Post encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "title": {
+                                            "type": "string",
+                                            "example": "Título del post"
+                                        },
+                                        "content": {
+                                            "type": "string",
+                                            "example": "Contenido del post"
+                                        },
+                                        "image_url": {
+                                            "type": "string",
+                                            "example": "https://ejemplo.com/imagen.jpg"
+                                        },
+                                        "active_from": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        },
+                                        "active_to": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Post no encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "El post no existe"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Actualizar un post existente",
+                "operationId": "929614537d76a081a92170a41ed3bdb3",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del post",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "content",
+                                    "type"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Mi primer post"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Mi primer descripcion para este post"
+                                    },
+                                    "content": {
+                                        "type": "string",
+                                        "example": "Contenido del post"
+                                    },
+                                    "type": {
+                                        "type": "string",
+                                        "enum": [
+                                            "Real estate events",
+                                            "Classroom courses",
+                                            "Webinars",
+                                            "Legal updates",
+                                            "News Mundoinmobilario.tv",
+                                            "Promotions",
+                                            "Publicity"
+                                        ],
+                                        "example": "Real estate events"
+                                    },
+                                    "image_url": {
+                                        "type": "string",
+                                        "example": "https://ejemplo.com/imagen.jpg"
+                                    },
+                                    "active_from": {
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "example": "2024-10-21 10:00:00"
+                                    },
+                                    "active_to": {
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "example": "2024-10-21 10:00:00"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Post actualizado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "¡El post se ha actualizado con éxito!"
+                                        },
+                                        "post": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "title": {
+                                                    "type": "string",
+                                                    "example": "Título actualizado"
+                                                },
+                                                "content": {
+                                                    "type": "string",
+                                                    "example": "Contenido actualizado"
+                                                },
+                                                "image_url": {
+                                                    "type": "string",
+                                                    "example": "https://ejemplo.com/nueva-imagen.jpg"
+                                                },
+                                                "active_from": {
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                },
+                                                "active_to": {
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Post no encontrado"
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Eliminar un post",
+                "operationId": "fad1726bd24cd459fc1525b67985df39",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del post",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Post eliminado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "¡El post se ha eliminado con éxito!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Post no encontrado"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Post": {
+                "required": [
+                    "id",
+                    "title",
+                    "content",
+                    "type"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "title": {
+                        "type": "string",
+                        "example": "Título del post"
+                    },
+                    "content": {
+                        "type": "string",
+                        "example": "Contenido del post"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "Real estate events",
+                            "Classroom courses",
+                            "Webinars",
+                            "Legal updates",
+                            "News Mundoinmobilario.tv",
+                            "Promotions",
+                            "Publicity"
+                        ],
+                        "example": "Real estate events"
+                    },
+                    "image_url": {
+                        "type": "string",
+                        "example": "https://ejemplo.com/imagen.jpg"
+                    },
+                    "active_from": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "active_to": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "sanctum": {
+                "type": "apiKey",
+                "description": "Enter token in format (Bearer <token>)",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Authentication",
+            "description": "Authentication"
+        },
+        {
+            "name": "Posts",
+            "description": "Posts"
+        }
+    ],
+    "security": [
+        {
+            "sanctum": []
+        }
+    ]
+}
